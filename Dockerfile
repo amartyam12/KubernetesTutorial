@@ -1,11 +1,15 @@
-FROM node:18-alpine
+FROM node:18-alpine AS installer
 
 WORKDIR /app
 
+COPY package*.json ./
+
+RUN npm install
+
 COPY . .
 
-RUN yarn install --production
+RUN npm run build
 
-CMD ["node","src/index.js"]
+FROM nginx:latest AS deployer
 
-EXPOSE 3000
+COPY --from=installer /app/build /usr/share/nginx/html
