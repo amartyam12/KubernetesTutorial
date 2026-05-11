@@ -1,0 +1,1 @@
+1. Create an nginx pod .(ex - kubectl run nginx-pod --image=nginx:latest )
